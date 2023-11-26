@@ -1,0 +1,166 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> E
+Rule 1     E -> E PLUS T
+Rule 2     E -> T
+Rule 3     T -> T TIMES F
+Rule 4     T -> F
+Rule 5     F -> LPAREN E RPAREN
+Rule 6     F -> ID
+
+Terminals, with rules where they appear
+
+ID                   : 6
+LPAREN               : 5
+PLUS                 : 1
+RPAREN               : 5
+TIMES                : 3
+error                : 
+
+Nonterminals, with rules where they appear
+
+E                    : 1 5 0
+F                    : 3 4
+T                    : 1 2 3
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . E
+    (1) E -> . E PLUS T
+    (2) E -> . T
+    (3) T -> . T TIMES F
+    (4) T -> . F
+    (5) F -> . LPAREN E RPAREN
+    (6) F -> . ID
+
+    LPAREN          shift and go to state 4
+    ID              shift and go to state 5
+
+    E                              shift and go to state 1
+    T                              shift and go to state 2
+    F                              shift and go to state 3
+
+state 1
+
+    (0) S' -> E .
+    (1) E -> E . PLUS T
+
+    PLUS            shift and go to state 6
+
+
+state 2
+
+    (2) E -> T .
+    (3) T -> T . TIMES F
+
+    PLUS            reduce using rule 2 (E -> T .)
+    $end            reduce using rule 2 (E -> T .)
+    RPAREN          reduce using rule 2 (E -> T .)
+    TIMES           shift and go to state 7
+
+
+state 3
+
+    (4) T -> F .
+
+    TIMES           reduce using rule 4 (T -> F .)
+    PLUS            reduce using rule 4 (T -> F .)
+    $end            reduce using rule 4 (T -> F .)
+    RPAREN          reduce using rule 4 (T -> F .)
+
+
+state 4
+
+    (5) F -> LPAREN . E RPAREN
+    (1) E -> . E PLUS T
+    (2) E -> . T
+    (3) T -> . T TIMES F
+    (4) T -> . F
+    (5) F -> . LPAREN E RPAREN
+    (6) F -> . ID
+
+    LPAREN          shift and go to state 4
+    ID              shift and go to state 5
+
+    E                              shift and go to state 8
+    T                              shift and go to state 2
+    F                              shift and go to state 3
+
+state 5
+
+    (6) F -> ID .
+
+    TIMES           reduce using rule 6 (F -> ID .)
+    PLUS            reduce using rule 6 (F -> ID .)
+    $end            reduce using rule 6 (F -> ID .)
+    RPAREN          reduce using rule 6 (F -> ID .)
+
+
+state 6
+
+    (1) E -> E PLUS . T
+    (3) T -> . T TIMES F
+    (4) T -> . F
+    (5) F -> . LPAREN E RPAREN
+    (6) F -> . ID
+
+    LPAREN          shift and go to state 4
+    ID              shift and go to state 5
+
+    T                              shift and go to state 9
+    F                              shift and go to state 3
+
+state 7
+
+    (3) T -> T TIMES . F
+    (5) F -> . LPAREN E RPAREN
+    (6) F -> . ID
+
+    LPAREN          shift and go to state 4
+    ID              shift and go to state 5
+
+    F                              shift and go to state 10
+
+state 8
+
+    (5) F -> LPAREN E . RPAREN
+    (1) E -> E . PLUS T
+
+    RPAREN          shift and go to state 11
+    PLUS            shift and go to state 6
+
+
+state 9
+
+    (1) E -> E PLUS T .
+    (3) T -> T . TIMES F
+
+    PLUS            reduce using rule 1 (E -> E PLUS T .)
+    $end            reduce using rule 1 (E -> E PLUS T .)
+    RPAREN          reduce using rule 1 (E -> E PLUS T .)
+    TIMES           shift and go to state 7
+
+
+state 10
+
+    (3) T -> T TIMES F .
+
+    TIMES           reduce using rule 3 (T -> T TIMES F .)
+    PLUS            reduce using rule 3 (T -> T TIMES F .)
+    $end            reduce using rule 3 (T -> T TIMES F .)
+    RPAREN          reduce using rule 3 (T -> T TIMES F .)
+
+
+state 11
+
+    (5) F -> LPAREN E RPAREN .
+
+    TIMES           reduce using rule 5 (F -> LPAREN E RPAREN .)
+    PLUS            reduce using rule 5 (F -> LPAREN E RPAREN .)
+    $end            reduce using rule 5 (F -> LPAREN E RPAREN .)
+    RPAREN          reduce using rule 5 (F -> LPAREN E RPAREN .)
+

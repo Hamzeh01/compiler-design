@@ -1,5 +1,6 @@
 import ply.yacc as yacc
 import ply.lex as lex
+import json
 
 # Lexer part (as you provided)
 tokens = ('ID', 'PLUS', 'TIMES', 'LPAREN', 'RPAREN')
@@ -23,7 +24,7 @@ lexer = lex.lex()
 # Parser part
 def p_expression_plus(p):
     'E : E PLUS T'
-    p[0] = ('+', p[1], p[3])
+    p[0] = {"type": "binary-op", "op": "+", "left": p[1], "right": p[3]}
 
 def p_expression_E(p):
     'E : T'
@@ -31,7 +32,7 @@ def p_expression_E(p):
 
 def p_term_times(p):
     'T : T TIMES F'
-    p[0] = ('*', p[1], p[3])
+    p[0] = {"type": "binary-op", "op": "*", "left": p[1], "right": p[3]}
 
 def p_term_T(p):
     'T : F'
@@ -43,7 +44,7 @@ def p_factor_expr(p):
 
 def p_factor_id(p):
     'F : ID'
-    p[0] = ('id', p[1])
+    p[0] = {"type": "id", "value": p[1]}
 
 def p_error(p):
     print("Syntax error in input!")
@@ -52,6 +53,12 @@ def p_error(p):
 parser = yacc.yacc()
 
 # Test
-data = "id + id * ( id )"
+data = "id + ( id )"
+
+# After parsing
 result = parser.parse(data)
-print(result)
+json_output = json.dumps(result, indent=2)
+print(json_output)
+
+
+# print(result)

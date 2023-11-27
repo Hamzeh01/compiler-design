@@ -53,7 +53,7 @@ def p_error(p):
 parser = yacc.yacc()
 
 # Test
-data = "id + ( id )"
+data = "id * id + ( id )"
 
 # After parsing
 result = parser.parse(data)

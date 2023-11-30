@@ -37,7 +37,7 @@ data_3 = 'id*id*id'
 data_4 = '(id+id)*id'
 
 # Input the test data to the lexer
-lexer.input(data_1)
+lexer.input(data_4)
 
 # Tokenize
 # This loop reads tokens from the lexer and prints them until there are no more tokens

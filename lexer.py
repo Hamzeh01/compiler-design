@@ -1,43 +1,46 @@
-
 import ply.lex as lex
-# List of token names. This is always required
+
+# These tokens represent the different types of symbols that the lexer will recognize.
 tokens = (
-   'ID',
-   'PLUS',
-   'TIMES',
+   'ID',     
+   'PLUS',   
+   'TIMES',  
    'LPAREN',
-   'RPAREN',
+   'RPAREN', 
 )
 
-# Regular expression rules for simple tokens
-t_PLUS    = r'\+'
-t_TIMES   = r'\*'
-t_LPAREN  = r'\('
-t_RPAREN  = r'\)'
+# Each of these definitions associates a token with a regular expression pattern
+t_PLUS    = r'\+'   
+t_TIMES   = r'\*'   
+t_LPAREN  = r'\('   
+t_RPAREN  = r'\)'   
 
-# A regular expression rule with some action code
+# This function defines how to recognize and process 'ID' tokens
 def t_ID(t):
-    r'id'
-    t.value = "id"  # You might want to do more sophisticated ID handling
-    return t
+    r'id'           
+    t.value = "identifier" 
+    return t  
 
-# Error handling rule
+# This function is invoked when an illegal character is encountered
 def t_error(t):
-    print(f"")
-    t.lexer.skip(1)
+    print(f"Illegal character '{t.value[0]}'")
+    t.lexer.skip(1)  # Skip the illegal character and continue
 
 # Build the lexer
 lexer = lex.lex()
 
-# Test it out
-data = '''
-id + id * ( id )
-'''
+# Test cases
+data_0 = 'id+id'
+data_1 = 'id+id*(id)'
+data_2 = 'id*id'
+data_3 = 'id*id*id'
+data_4 = '(id+id)*id'
 
-# Give the lexer some input
-lexer.input(data)
+# Input the test data to the lexer
+lexer.input(data_1)
 
 # Tokenize
+# This loop reads tokens from the lexer and prints them until there are no more tokens
 while True:
     tok = lexer.token()
     if not tok: 
